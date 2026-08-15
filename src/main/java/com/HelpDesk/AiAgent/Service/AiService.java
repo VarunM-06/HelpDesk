@@ -1,5 +1,6 @@
 package com.HelpDesk.AiAgent.Service;
 
+import com.HelpDesk.AiAgent.Tools.EmailTool;
 import com.HelpDesk.AiAgent.Tools.TicketDatabaseTool;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class AiService {
     private final TicketDatabaseTool ticketDatabaseTool;
 //    private final EmailTool emailTool;
 
+    private final EmailTool emailTool;
     @Value("classpath:/systemmessage.st")
     private Resource systemPromptResource;
 
@@ -34,7 +36,7 @@ public class AiService {
                 .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, conversationId))
                 //tool informations
 //                .tools(ticketDatabaseTool, emailTool)
-                .tools(ticketDatabaseTool)
+                .tools(ticketDatabaseTool,emailTool)
                 .system(systemPromptResource)
                 .user(query)
                 .call()
